@@ -4,16 +4,27 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CSVReader {
-    public static ArrayList<ImdbData> csvReader(){
-        File imdb = new File("Resources/imdb-data.csv");
+    public static TableStructure csvReader(String file, String delimiter){
+        File imdb = new File(file);
+        ArrayList<String> columnTitles = new ArrayList<>();
         ArrayList<ImdbData> imdbArrayList = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(imdb);
             int count = 0;
             while(scanner.hasNextLine()){
-                if(count >= 1) {
+                if(count <1){
                     String line = scanner.nextLine();
-                    String[] stringsInArray = line.split(";");
+                    String[] stringsInArray = line.split(delimiter);
+                    columnTitles.add(stringsInArray[0]);
+                    columnTitles.add(stringsInArray[1]);
+                    columnTitles.add(stringsInArray[2]);
+                    columnTitles.add(stringsInArray[3]);
+                    columnTitles.add(stringsInArray[4]);
+                    columnTitles.add(stringsInArray[5]);
+                }
+                else if(count >= 1) {
+                    String line = scanner.nextLine();
+                    String[] stringsInArray = line.split(delimiter);
                     int year = Integer.parseInt(stringsInArray[0]);
                     int length = Integer.parseInt(stringsInArray[1]);
                     String title = stringsInArray[2];
@@ -23,14 +34,12 @@ public class CSVReader {
                     ImdbData currentImdb = new ImdbData(year, length, title, subject, popularity, awards);
                     imdbArrayList.add(currentImdb);
                 }
-                else{
-                    scanner.nextLine();
-                }
                 count++;
             }
         }catch(FileNotFoundException e){
             System.out.println("File not found");
         }
-        return imdbArrayList;
+        TableStructure Table = new TableStructure(columnTitles,imdbArrayList);
+        return Table;
     }
 }
