@@ -1,11 +1,11 @@
 import java.io.*;
 
 public class FileCreator {
-    public static void createDDL(String fileName){
+    public static void createFile(String fileName){
         try{
-            File DDLFile = new File(fileName);
-            if (DDLFile.createNewFile()) {
-                System.out.println("File created: " + DDLFile.getName());
+            File file = new File(fileName);
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
             } else {
                 System.out.println("File already exists.");
             }
@@ -14,7 +14,7 @@ public class FileCreator {
         }
     }
 
-    public static void fillDDL(String input, String fileNamePath){
+    public static void fillFile(String input, String fileNamePath){
         try(FileWriter fw = new FileWriter(fileNamePath, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
